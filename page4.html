@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finale</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #1a1a1a, #000);
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background: #222;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 280px;
+      transform: scale(0.9);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.5s ease;
+      box-shadow: 0 0 0 transparent;
+    }
+
+    .card.visible {
+      transform: scale(1);
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(255, 100, 150, 0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .caption {
+      padding: 15px;
+      font-size: 1em;
+      color: #ccc;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover .caption {
+      opacity: 1;
+    }
+
+    .final {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 1.5em;
+      color: #ffb6c1;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 1.2em;
+      color: #ff6b81;
+      animation: floatUp 10s linear infinite;
+      opacity: 0.2;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-10vh); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating hearts -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <div class="gallery">
+    <div class="card"><img src="image1.jpg"><div class="caption">You’re the constellation I never knew I needed.</div></div>
+    <div class="card"><img src="image2.jpg"><div class="caption">You ground me, even when I’m floating.</div></div>
+    <div class="card"><img src="image3.jpg"><div class="caption">You’re my moon — quiet, glowing, always watching.</div></div>
+    <div class="card"><img src="image4.jpg"><div class="caption">You’re loyalty, softness, and joy — all in one heartbeat.</div></div>
+    <div class="card"><img src="image5.jpg"><div class="caption">You make silence feel like music.</div></div>
+    <div class="card"><img src="image6.jpg"><div class="caption">You’re the glow in my evening, the heartbeat in my stars.</div></div>
+    <div class="card"><img src="image7.jpg"><div class="caption">You’re the reason this entire world feels more alive.</div></div>
+  </div>
+
+  <div class="final">
+    Akshita, I made this for you.<br/>
+    Every puzzle, every whisper, every glow — it’s all you.<br/>
+    I know that now its too late and u dont love me anymore but all my heart says is I love you and I always will. <br/>
+    You were and are my everything. <br/>
+    I hope you find happiness, even if its not with me. <br/>
+    and i will love you forever. <br/>
+    -Aahan!!
+  </div>
+
+  <script>
+    // Reveal cards on scroll
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>

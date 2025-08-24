@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Whisper Gate</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to top, #0a0a0a, #000000);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 80px 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2em;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .emotions {
+      margin-top: 30px;
+      animation: fadeIn 3s ease-in-out;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .emotions button {
+      padding: 12px 20px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease;
+    }
+
+    .emotions button:hover {
+      background: #555;
+    }
+
+    .whisper {
+      margin-top: 40px;
+      font-size: 1.2em;
+      color: #ccc;
+      animation: fadeIn 2s ease-in-out;
+      display: none;
+    }
+
+    .next {
+      margin-top: 30px;
+      display: none;
+    }
+
+    .next a {
+      display: inline-block;
+      padding: 10px 25px;
+      background: #444;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .next a:hover {
+      background: #666;
+    }
+
+    .paw {
+      position: absolute;
+      font-size: 1.5em;
+      opacity: 0.2;
+      animation: float 12s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100vh); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="container">
+    <h1>Akshita, what do you make me feel?</h1>
+    <div class="emotions">
+      <button onclick="reveal('Calm')">Calm</button>
+      <button onclick="reveal('Loyalty')">Loyalty</button>
+      <button onclick="reveal('Wonder')">Wonder</button>
+      <button onclick="reveal('Warmth')">Warmth</button>
+    </div>
+    <div class="whisper" id="whisper"></div>
+    <div class="next" id="next">
+      <a href="page4.html">Final message 🌌</a>
+    </div>
+  </div>
+
+  <script>
+    // Starfield
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let stars = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+      stars = [];
+      for (let i = 0; i < 100; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 1.5,
+          alpha: Math.random()
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function animateStars() {
+      for (let star of stars) {
+        star.alpha += (Math.random() - 0.5) * 0.05;
+        star.alpha = Math.max(0.1, Math.min(1, star.alpha));
+      }
+      drawStars();
+      requestAnimationFrame(animateStars);
+    }
+
+    resize();
+    createStars();
+    animateStars();
+    window.addEventListener('resize', () => {
+      resize();
+      createStars();
+    });
+
+    // Pawprint drift
+    for (let i = 0; i < 20; i++) {
+      const paw = document.createElement('div');
+      paw.className = 'paw';
+      paw.innerText = '🐾';
+      paw.style.left = Math.random() * 100 + 'vw';
+      paw.style.top = Math.random() * 100 + 'vh';
+      paw.style.animationDuration = (5 + Math.random() * 10) + 's';
+      document.body.appendChild(paw);
+    }
+
+    // Whisper logic
+    function reveal(emotion) {
+      const whisper = document.getElementById('whisper');
+      whisper.style.display = 'block';
+      let text = "";
+
+      switch (emotion) {
+        case 'Calm':
+          text = "Akshita, you are my calm. Like water under stars, you soothe every storm inside me.";
+          break;
+        case 'Loyalty':
+          text = "Akshita, you are loyalty. Like a dog’s gaze, you stay — even when the world shifts.";
+          break;
+        case 'Wonder':
+          text = "Akshita, you are wonder. You make black feel like velvet and silence feel like music.";
+          break;
+        case 'Warmth':
+          text = "Akshita, you are warmth. You’re the glow in my evening, the heartbeat in my stars.";
+          break;
+      }
+
+      whisper.innerText = text;
+      document.getElementById('next').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
